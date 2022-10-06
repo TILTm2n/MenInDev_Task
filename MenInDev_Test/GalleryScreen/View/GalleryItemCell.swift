@@ -20,6 +20,13 @@ class GalleryItemCell: UITableViewCell {
         content.clipsToBounds = true
         return content
     }()
+    private let descriptionContainer: UIView = {
+        let description = UIView()
+        description.translatesAutoresizingMaskIntoConstraints = false
+        description.backgroundColor = .white
+        description.clipsToBounds = true
+        return description
+    }()
     private let image: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -31,48 +38,43 @@ class GalleryItemCell: UITableViewCell {
     }()
     private let title: UILabel = {
         let title = UILabel()
-        title.numberOfLines = 0
+        title.numberOfLines = 3
         title.translatesAutoresizingMaskIntoConstraints = false
         title.textColor = UIColor(red: 0.153, green: 0.153, blue: 0.161, alpha: 1)
-        title.font = .systemFont(ofSize: 15)
+        title.font = .systemFont(ofSize: 15, weight: .semibold)
         title.text = "Fhdjfkadfnk ajfjnsjkldfn  dfhjffala hkgkjgkj"
         title.lineBreakMode = .byWordWrapping
+        title.sizeToFit()
         return title
     }()
-    private let date: UILabel = {
-        let date = UILabel()
-        date.translatesAutoresizingMaskIntoConstraints = false
-        date.translatesAutoresizingMaskIntoConstraints = false
-        date.textColor = UIColor(red: 0.6, green: 0.62, blue: 0.663, alpha: 1)
-        date.text = "29.09.2022"
-        return date
-    }()
-    private let city: UILabel = {
-        let city = UILabel()
-        city.translatesAutoresizingMaskIntoConstraints = false
-        city.textColor = UIColor(red: 0.6, green: 0.62, blue: 0.663, alpha: 1)
-        city.font = .systemFont(ofSize: 13)
-        city.text = "Obninsk"
-        return city
+    private let dateCity: UILabel = {
+        let dateCity = UILabel()
+        dateCity.translatesAutoresizingMaskIntoConstraints = false
+        dateCity.textColor = UIColor(red: 0.6, green: 0.62, blue: 0.663, alpha: 1)
+        dateCity.font = .systemFont(ofSize: 13, weight: .semibold)
+        dateCity.text = "•"
+        dateCity.lineBreakMode = .byWordWrapping
+        dateCity.numberOfLines = 0
+        return dateCity
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         contentView.addSubview(contentContainer)
+        contentContainer.addSubview(descriptionContainer)
         contentContainer.addSubview(image)
-        contentContainer.addSubview(date)
-        contentContainer.addSubview(city)
-        contentContainer.addSubview(title)
+        descriptionContainer.addSubview(dateCity)
+        descriptionContainer.addSubview(title)
         
         selectionStyle = .none
         
         setConstraints()
         
         contentView.layer.shadowOpacity = 1
-        contentView.layer.shadowRadius = 4
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 4)
-        contentView.layer.shadowColor = UIColor.gray.cgColor
+        contentView.layer.shadowRadius = 6
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        contentView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
     }
     
     required init?(coder: NSCoder) {
@@ -90,42 +92,42 @@ class GalleryItemCell: UITableViewCell {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            contentContainer.heightAnchor.constraint(equalToConstant: 120),
-            contentContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            contentContainer.heightAnchor.constraint(equalToConstant: 106),
+            contentContainer.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             contentContainer.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             contentContainer.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            contentContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
         NSLayoutConstraint.activate([
             image.heightAnchor.constraint(equalTo: contentContainer.heightAnchor),
-            image.widthAnchor.constraint(equalToConstant: 106),
+            image.widthAnchor.constraint(equalTo: image.heightAnchor),
             image.centerYAnchor.constraint(equalTo: contentContainer.centerYAnchor),
             image.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor)
         ])
         NSLayoutConstraint.activate([
-            date.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 16),
-            date.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            date.heightAnchor.constraint(equalToConstant: 18),
-            date.widthAnchor.constraint(equalToConstant: 93)
+            descriptionContainer.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 12),
+            descriptionContainer.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 16),
+            descriptionContainer.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -16),
+            descriptionContainer.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -10),
         ])
         NSLayoutConstraint.activate([
-            city.leadingAnchor.constraint(equalTo: date.trailingAnchor, constant: 15),
-            city.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            city.heightAnchor.constraint(equalToConstant: 18),
-            city.topAnchor.constraint(equalTo: date.topAnchor)
+            dateCity.leadingAnchor.constraint(equalTo: descriptionContainer.leadingAnchor),
+            dateCity.topAnchor.constraint(equalTo: descriptionContainer.topAnchor),
+            dateCity.heightAnchor.constraint(equalToConstant: 18),
+            dateCity.widthAnchor.constraint(equalTo: descriptionContainer.widthAnchor)
         ])
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: date.bottomAnchor, constant: 4),
-            title.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 16),
-            title.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant:  -16)
+            title.topAnchor.constraint(equalTo: dateCity.bottomAnchor, constant: 4),
+            title.leadingAnchor.constraint(equalTo: descriptionContainer.leadingAnchor),
+            title.trailingAnchor.constraint(equalTo: descriptionContainer.trailingAnchor),
         ])
     }
     
     func configureCell(_ item: GalleryItem) {
         image.sd_setImage(with: URL(string: item.preview.original))
         title.text = item.title
-        date.text = item.date
-        city.text = item.city
+        dateCity.text = "\(item.date) • \(item.city)"
+        
     }
 
 }

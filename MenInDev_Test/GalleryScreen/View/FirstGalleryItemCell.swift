@@ -85,6 +85,7 @@ class FirstGalleryItemCell: UITableViewCell {
             contentContainer.heightAnchor.constraint(equalToConstant: 70),
             contentContainer.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             contentContainer.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            contentContainer.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             contentContainer.bottomAnchor.constraint(equalTo: image.bottomAnchor)
         ])
         NSLayoutConstraint.activate([

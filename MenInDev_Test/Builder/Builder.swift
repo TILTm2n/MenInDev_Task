@@ -43,8 +43,19 @@ class Builder {
     }
     
     static func buildProfileModule() -> UIViewController {
-        let profileController = ProfileView()
-        return profileController
+        let profileView = ProfileView()
+        let networkService = ProfileNetwork()
+        let presenter = ProfilePresenter(profileView, networkService)
+        profileView.presenter = presenter
+        return profileView
+    }
+    
+    static func buildEditModule() -> UIViewController {
+        let editView = EditView()
+        let networkService = ProfileNetwork()
+        let presenter = EditPresenter(editView, networkService)
+        editView.presenter = presenter
+        return editView
     }
     
 }
