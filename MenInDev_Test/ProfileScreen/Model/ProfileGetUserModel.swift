@@ -19,9 +19,9 @@ struct UserInfo: Codable {
 
 struct UserData: Codable {
     var id: Int
-    var name: String
+    var name: String?
     var phone: String
-    var code: Int
+    var code: String
     var email: String
     var firstName: String
     var lastName: String?
@@ -29,15 +29,15 @@ struct UserData: Codable {
     var avatar: Avatar
     
     enum CodingKeys: String, CodingKey {
-        case id = "id"
-        case name = "name"
-        case phone = "phone"
-        case code = "code"
-        case email = "email"
-        case firstName = "firstName"
+        case id
+        case name
+        case phone
+        case code
+        case email
+        case firstName
         case lastName = "lastname"
         case roleId = "role_id"
-        case avatar = "avatar"
+        case avatar 
     }
 }
 

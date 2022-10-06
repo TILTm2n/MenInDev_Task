@@ -26,7 +26,6 @@ class MainPresenter: MainPresenterProtocol {
     
     func getPosts() {
         networkService?.fetchPosts(completion: { result in
-            
             DispatchQueue.main.async {
                 switch result{
                 case .success(let posts):
@@ -36,7 +35,6 @@ class MainPresenter: MainPresenterProtocol {
                     self.view?.failure(error: error)
                 }
             }
-            
         })
     }
     

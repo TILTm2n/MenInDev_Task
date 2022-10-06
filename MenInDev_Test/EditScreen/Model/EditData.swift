@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct EditData {
+    var firstName: String
+    var email: String
+    var avatarId: String
+}

@@ -21,6 +21,7 @@ class GalleryDetailView: UIViewController {
     private let contentContainer: UIView = {
         let content = UIView()
         content.translatesAutoresizingMaskIntoConstraints = false
+        content.backgroundColor = UIColor(red: 0.976, green: 0.976, blue: 0.984, alpha: 1)
         content.clipsToBounds = true
         return content
     }()
@@ -30,7 +31,7 @@ class GalleryDetailView: UIViewController {
         title.numberOfLines = 0
         title.translatesAutoresizingMaskIntoConstraints = false
         title.textColor = .black
-        title.font = .systemFont(ofSize: 22 )
+        title.font = .systemFont(ofSize: 17 )
         title.text = "ddfadjglsj gjfkljsgl fgl jflgj;lsfgjl  JKLJLJlll sgk"
         title.lineBreakMode = .byWordWrapping
         return title
@@ -38,18 +39,10 @@ class GalleryDetailView: UIViewController {
     let date: UILabel = {
         let date = UILabel()
         date.translatesAutoresizingMaskIntoConstraints = false
-        date.textColor = .black
-        date.font = .systemFont(ofSize: 18)
-        date.text = "29.09.2022"
+        date.font = .systemFont(ofSize: 13)
+        date.textColor = UIColor(red: 0.6, green: 0.62, blue: 0.663, alpha: 1)
+        date.text = "-"
         return date
-    }()
-    let city: UILabel = {
-        let city = UILabel()
-        city.translatesAutoresizingMaskIntoConstraints = false
-        city.textColor = .black
-        city.font = .systemFont(ofSize: 18)
-        city.text = "Obninsk"
-        return city
     }()
     
     override func viewDidLoad() {
@@ -69,9 +62,9 @@ class GalleryDetailView: UIViewController {
         view.addSubview(contentContainer)
         contentContainer.addSubview(date)
         contentContainer.addSubview(detailTitle)
-        contentContainer.addSubview(city)
         
         navigationController?.navigationBar.backgroundColor = .white
+        navigationItem.title = "Фотоотчет"
         
         onUpdate()
     }
@@ -123,7 +116,6 @@ class GalleryDetailView: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            //contentContainer.heightAnchor.constraint(equalToConstant: 100),
             contentContainer.widthAnchor.constraint(equalTo: view.widthAnchor),
             contentContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentContainer.topAnchor.constraint(equalTo: navigationController.bottomAnchor)
@@ -133,21 +125,12 @@ class GalleryDetailView: UIViewController {
             detailTitle.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 10),
             detailTitle.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 16),
             detailTitle.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -16),
-            //detailTitle.bottomAnchor.constraint(equalTo: date.topAnchor, constant: 8)
         ])
         NSLayoutConstraint.activate([
             date.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 16),
-            date.widthAnchor.constraint(equalToConstant: 100),
+            date.widthAnchor.constraint(equalTo: contentContainer.widthAnchor),
             date.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -16),
-            //date.heightAnchor.constraint(equalToConstant: 18),
             date.topAnchor.constraint(equalTo: detailTitle.bottomAnchor, constant: 10)
-        ])
-        NSLayoutConstraint.activate([
-            city.leadingAnchor.constraint(equalTo: date.trailingAnchor, constant: 10),
-            city.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -16),
-            city.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -16),
-            //city.heightAnchor.constraint(equalToConstant: 18),
-            city.topAnchor.constraint(equalTo: detailTitle.bottomAnchor, constant: 10)
         ])
         
     }
@@ -163,8 +146,8 @@ extension GalleryDetailView: GalleryDetailViewProtocol {
     func onUpdate() {
         guard let data = presenter?.galleryItem else { return }
         detailTitle.text = data.title
-        date.text = data.date
-        city.text = data.city
+        date.text = "\(data.date), \(data.city)"
+        //city.text = data.city
         self.collectionView.reloadData()
     }
 }

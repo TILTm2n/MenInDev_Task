@@ -37,18 +37,18 @@ protocol GetOneGalleryNetworkProtocol: AnyObject {
 }
 
 //MARK: - Profile
-protocol GetProfileProtocol {
+protocol GetProfileNetworkProtocol: AnyObject {
     func fetchProfile(completion: @escaping (Result<UserInfo, Error>) -> Void)
 }
 
-protocol EditProfilePritocol {
-    func editProfile() -> Void
+protocol EditProfileNetworkPritocol: AnyObject {
+    func editProfile(_ editData: EditData, completion: @escaping () -> Void) -> Void
 }
 
-protocol DeleteProfileProtocol {
+protocol DeleteProfileNetworkProtocol: AnyObject {
     func deleteProfile() -> Void
 }
 
-protocol ProfileProtocol: GetProfileProtocol {
+protocol ProfileNetworkProtocol: GetProfileNetworkProtocol, EditProfileNetworkPritocol {
     
 }

@@ -39,7 +39,6 @@ class GalleryDetailCell: UICollectionViewCell {
     }
     
     func setImage(with url: String){
-        //self.imageView.sd_setImage(with: URL(string: url), placeholderImage: UIImage(named: "default"))
         imageView.sd_setImage(with: URL(string: url))
     }
 }

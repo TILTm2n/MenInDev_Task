@@ -93,7 +93,8 @@ class GetOneGalleryNetwork: GetOneGalleryNetworkProtocol {
     }
 }
 
-class ProfileNetwork: ProfileProtocol {
+class ProfileNetwork: ProfileNetworkProtocol {
+    
     func fetchProfile(completion: @escaping (Result<UserInfo, Error>) -> Void) {
         let urlString = "https://yakuba.htmlup.ru/api/v1/profile"
         guard let url = URL(string: urlString) else { return }
@@ -112,6 +113,22 @@ class ProfileNetwork: ProfileProtocol {
             } catch {
                 completion(.failure(error))
             }
+        }.resume()
+    }
+    
+    func editProfile(_ editData: EditData, completion: @escaping () -> Void) {
+        let urlString = "https://yakuba.htmlup.ru/api/v1/profile"
+        let json: [String: Any] = ["firstName": editData.firstName, "email": editData.email, "avatarId": editData.avatarId]
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: json) else { return }
+        guard let url = URL(string: urlString) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue("Bearer 266|5Y64elbHH7O9TCBx6Id4IN5XyU8cveAx5SNfGMGp", forHTTPHeaderField: "Authorization")
+        request.setValue("\(jsonData.count)", forHTTPHeaderField: "Content-Length")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        URLSession.shared.dataTask(with: request) { _, _, _ in
+            
         }.resume()
     }
     

@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol EditViewProtocol: AnyObject {
+    func success()
+    func failure(error: Error)
+}
+
 class EditView: UIViewController {
+    
+    var presenter: EditPresenterProtocol?
     
     lazy var scrollBottomConstraint = scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
     
@@ -16,7 +23,6 @@ class EditView: UIViewController {
         scroll.translatesAutoresizingMaskIntoConstraints = false
         return scroll
     }()
-    
     let avatar: UIImageView = {
         let avatar = UIImageView()
         avatar.image = UIImage(named: "default")
@@ -26,7 +32,6 @@ class EditView: UIViewController {
         avatar.layer.cornerRadius = 44
         return avatar
     }()
-    
     let editButton: UIButton = {
         let edit = UIButton()
         edit.setTitle("Изменить фото", for: .normal)
@@ -34,44 +39,30 @@ class EditView: UIViewController {
         edit.translatesAutoresizingMaskIntoConstraints = false
         return edit
     }()
-
     let nameTextField: UITextField = {
         let name = CustomEditTextField(with: "Имя")
         name.placeholder = "Имя"
-//        name.translatesAutoresizingMaskIntoConstraints = false
-//        name.borderStyle = .none
         name.text = "Name"
         return name
     }()
-    
     let secondNameTextField: UITextField = {
         let secondName = CustomEditTextField(with: "Фамилия")
         secondName.placeholder = "Фамилия"
-//        secondName.translatesAutoresizingMaskIntoConstraints = false
-//        secondName.borderStyle = .none
         secondName.text = "SecondName"
         return secondName
     }()
-    
     let emailTextField: UITextField = {
         let email = CustomEditTextField(with: "E-mail")
         email.placeholder = "E-mail"
-        
-//        email.translatesAutoresizingMaskIntoConstraints = false
-//        email.borderStyle = .none
         email.text = "E-mail"
         return email
     }()
-    
     let phoneNumberTextField: UITextField = {
         let phoneNumber = CustomEditTextField(with: "Телефон")
         phoneNumber.placeholder = "+7 (000) 000 – 00 – 00"
-//        phoneNumber.translatesAutoresizingMaskIntoConstraints = false
-//        phoneNumber.borderStyle = .none
         phoneNumber.text = "+7 (000) 000 – 00 – 00"
         return phoneNumber
     }()
-    
     let deleteButton: UIButton = {
        let delete = UIButton()
         delete.translatesAutoresizingMaskIntoConstraints = false
@@ -87,14 +78,6 @@ class EditView: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-//        view.addSubview(avatar)
-//        view.addSubview(editButton)
-//        view.addSubview(nameTextField)
-//        view.addSubview(secondNameTextField)
-//        view.addSubview(emailTextField)
-//        view.addSubview(phoneNumberTextField)
-        
         
         view.addSubview(scrollView)
         scrollView.addSubview(avatar)
@@ -151,6 +134,15 @@ class EditView: UIViewController {
         phoneBottomLine.frame = CGRect(x: 0.0, y: phoneNumberTextField.frame.height - 1, width: phoneNumberTextField.frame.width, height: 1.0)
         phoneBottomLine.backgroundColor = UIColor.gray.cgColor
         phoneNumberTextField.layer.addSublayer(phoneBottomLine)
+    }
+    
+    func setupUI() {
+        guard let info = presenter?.userData else { return }
+        avatar.sd_setImage(with: URL(string: info.user.avatar.original), placeholderImage: UIImage(named: "default"))
+        nameTextField.text = info.user.firstName
+        secondNameTextField.text = info.user.lastName
+        emailTextField.text = info.user.email
+        phoneNumberTextField.text = info.user.phone
     }
     
     override func viewDidLayoutSubviews() {
@@ -223,6 +215,16 @@ class EditView: UIViewController {
 
 
 }
+
+extension EditView: EditViewProtocol {
+    func success() {
+        setupUI()
+    }
+    func failure(error: Error) {
+        
+    }
+}
+
 
 extension EditView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

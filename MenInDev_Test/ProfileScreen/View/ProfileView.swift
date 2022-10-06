@@ -6,13 +6,24 @@
 //
 
 import UIKit
+import SDWebImage
 
-protocol ProfileViewProtocol {
+enum SocialNetworks: String {
+    case yandex = "ya"
+    case vkontakte = "vk"
+    case telegram = "tg"
+    case youtube = "yt"
+    case tiktok = "tt"
+}
+
+protocol ProfileViewProtocol: AnyObject {
     func success()
     func failure(error: Error)
 }
 
 class ProfileView: UIViewController {
+    
+    var presenter: ProfilePresenterProtocol?
 
     let userContainer: UIView = {
         let user = UIView()
@@ -20,14 +31,13 @@ class ProfileView: UIViewController {
         user.translatesAutoresizingMaskIntoConstraints = false
         return user
     }()
-    
     let userIcon: UIImageView = {
         let icon = UIImageView()
         icon.backgroundColor = .blue
         icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.clipsToBounds = true
         return icon
     }()
-    
     let firstName: UILabel = {
         let name = UILabel()
         name.text = "Владимир"
@@ -35,15 +45,13 @@ class ProfileView: UIViewController {
         name.translatesAutoresizingMaskIntoConstraints = false
         return name
     }()
-    
-    let secondName: UILabel = {
+    let lastName: UILabel = {
         let name = UILabel()
         name.text = "Якуба"
         name.font = .systemFont(ofSize: 15)
         name.translatesAutoresizingMaskIntoConstraints = false
         return name
     }()
-    
     let editButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -51,21 +59,18 @@ class ProfileView: UIViewController {
         button.addTarget(self, action: #selector(editView), for: .touchUpInside)
         return button
     }()
-    
     let helpContainer: UIView = {
         let help = UIView()
         help.backgroundColor = .white
         help.translatesAutoresizingMaskIntoConstraints = false
         return help
     }()
-    
     let helpIcon: UIImageView = {
         let help = UIImageView()
         help.translatesAutoresizingMaskIntoConstraints = false
         help.image = UIImage(named: "help")
         return help
     }()
-    
     let helpLabel: UILabel = {
         let name = UILabel()
         name.text = "Обратная связь"
@@ -73,14 +78,12 @@ class ProfileView: UIViewController {
         name.translatesAutoresizingMaskIntoConstraints = false
         return name
     }()
-    
     let helpArrow: UIImageView = {
         let help = UIImageView()
         help.image = UIImage(named: "helpArrow")
         help.translatesAutoresizingMaskIntoConstraints = false
         return help
     }()
-    
     let outButton: UIButton = {
         let outButton = UIButton()
         outButton.setTitle("Выйти из профиля", for: .normal)
@@ -89,13 +92,11 @@ class ProfileView: UIViewController {
         outButton.translatesAutoresizingMaskIntoConstraints = false
         return outButton
     }()
-    
     let socialNetworkContainer: UIView = {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         return container
     }()
-    
     let socialStackView: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -114,13 +115,11 @@ class ProfileView: UIViewController {
         view.addSubview(userIcon)
         view.addSubview(editButton)
         view.addSubview(firstName)
-        view.addSubview(secondName)
-        
+        view.addSubview(lastName)
         view.addSubview(helpContainer)
         view.addSubview(helpIcon)
         view.addSubview(helpLabel)
         view.addSubview(helpArrow)
-        
         view.addSubview(outButton)
         view.addSubview(socialNetworkContainer)
         view.addSubview(socialStackView)
@@ -134,15 +133,13 @@ class ProfileView: UIViewController {
             socialStackView.addArrangedSubview(createBlock())
         }
         
-        
     }
     
     func createBlock() -> UIImageView {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        imageView.image = UIImage(named: "yt")
+        imageView.image = UIImage(named: "tg")
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        print(imageView.frame)
         return imageView
     }
     
@@ -152,7 +149,7 @@ class ProfileView: UIViewController {
     }
     
     @objc func editView() {
-        let edv = EditView()
+        let edv = Builder.buildEditModule()
         navigationController?.pushViewController(edv, animated: true)
     }
     
@@ -166,7 +163,7 @@ class ProfileView: UIViewController {
             userContainer.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             userContainer.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             userContainer.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-        ])
+        ]) ///userContainer
         NSLayoutConstraint.activate([
             userIcon.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: 16),
             userIcon.topAnchor.constraint(equalTo: userContainer.topAnchor, constant: 16),
@@ -174,18 +171,18 @@ class ProfileView: UIViewController {
             userIcon.centerYAnchor.constraint(equalTo: userContainer.centerYAnchor),
             userIcon.heightAnchor.constraint(equalToConstant: 40),
             userIcon.widthAnchor.constraint(equalTo: userIcon.heightAnchor)
-        ])
+        ]) ///userIcon
         NSLayoutConstraint.activate([
             firstName.topAnchor.constraint(equalTo: userContainer.topAnchor, constant: 16),
             firstName.leadingAnchor.constraint(equalTo: userIcon.trailingAnchor, constant: 16),
             firstName.trailingAnchor.constraint(equalTo: editButton.leadingAnchor, constant: -16),
-        ])
+        ]) ///firstName
         NSLayoutConstraint.activate([
-            secondName.bottomAnchor.constraint(equalTo: userContainer.bottomAnchor, constant: -16),
-            secondName.leadingAnchor.constraint(equalTo: userIcon.trailingAnchor, constant: 16),
-            secondName.trailingAnchor.constraint(equalTo: editButton.leadingAnchor, constant: -16),
-            secondName.topAnchor.constraint(equalTo: firstName.bottomAnchor)
-        ])
+            lastName.bottomAnchor.constraint(equalTo: userContainer.bottomAnchor, constant: -16),
+            lastName.leadingAnchor.constraint(equalTo: userIcon.trailingAnchor, constant: 16),
+            lastName.trailingAnchor.constraint(equalTo: editButton.leadingAnchor, constant: -16),
+            lastName.topAnchor.constraint(equalTo: firstName.bottomAnchor)
+        ]) ///lastName
         NSLayoutConstraint.activate([
             editButton.trailingAnchor.constraint(equalTo: userContainer.trailingAnchor, constant: -16),
             editButton.topAnchor.constraint(equalTo: userContainer.topAnchor, constant: 25),
@@ -193,13 +190,12 @@ class ProfileView: UIViewController {
             editButton.centerYAnchor.constraint(equalTo: userContainer.centerYAnchor),
             editButton.heightAnchor.constraint(equalToConstant: 22),
             editButton.widthAnchor.constraint(equalTo: editButton.heightAnchor)
-        ])
-        
+        ]) ///editButton
         NSLayoutConstraint.activate([
             helpContainer.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
             helpContainer.topAnchor.constraint(equalTo: userContainer.bottomAnchor, constant: 8),
             helpContainer.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
-        ])
+        ]) ///helpContainer
         NSLayoutConstraint.activate([
             helpIcon.leadingAnchor.constraint(equalTo: helpContainer.leadingAnchor, constant: 16),
             helpIcon.topAnchor.constraint(equalTo: helpContainer.topAnchor, constant: 25),
@@ -207,12 +203,12 @@ class ProfileView: UIViewController {
             helpIcon.centerYAnchor.constraint(equalTo: helpContainer.centerYAnchor),
             helpIcon.heightAnchor.constraint(equalToConstant: 22),
             helpIcon.widthAnchor.constraint(equalTo: helpIcon.heightAnchor)
-        ])
+        ]) ///helpIcon
         NSLayoutConstraint.activate([
             helpLabel.leadingAnchor.constraint(equalTo: helpIcon.trailingAnchor, constant: 16),
             helpLabel.trailingAnchor.constraint(equalTo: helpArrow.leadingAnchor, constant: -16),
             helpLabel.centerYAnchor.constraint(equalTo: helpContainer.centerYAnchor)
-        ])
+        ]) ///helpLabel
         NSLayoutConstraint.activate([
             helpArrow.trailingAnchor.constraint(equalTo: helpContainer.trailingAnchor, constant: -16),
             helpArrow.topAnchor.constraint(equalTo: helpContainer.topAnchor, constant: 25),
@@ -220,41 +216,49 @@ class ProfileView: UIViewController {
             helpArrow.centerYAnchor.constraint(equalTo: helpContainer.centerYAnchor),
             helpArrow.heightAnchor.constraint(equalToConstant: 22),
             helpArrow.widthAnchor.constraint(equalToConstant: 12)
-        ])
-        
+        ]) ///helpArrow
         NSLayoutConstraint.activate([
             outButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 40),
             outButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -40),
             outButton.topAnchor.constraint(equalTo: helpContainer.bottomAnchor, constant: 40)
-        ])
-        
+        ]) ///outButton
         NSLayoutConstraint.activate([
             socialNetworkContainer.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             socialNetworkContainer.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             socialNetworkContainer.topAnchor.constraint(equalTo: outButton.bottomAnchor, constant: 55),
             socialNetworkContainer.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             socialNetworkContainer.heightAnchor.constraint(equalToConstant: 40)
-        ])
-        
+        ]) ///socialNetworkContainer
         NSLayoutConstraint.activate([
             socialStackView.leadingAnchor.constraint(equalTo: socialNetworkContainer.leadingAnchor, constant: 40),
             socialStackView.trailingAnchor.constraint(equalTo: socialNetworkContainer.trailingAnchor, constant: -40),
             socialStackView.topAnchor.constraint(equalTo: socialNetworkContainer.topAnchor),
             socialStackView.bottomAnchor.constraint(equalTo: socialNetworkContainer.bottomAnchor),
-        ])
+        ]) ///socialStackView
         
+        userIcon.layer.cornerRadius = userIcon.frame.size.height/2
     }
     
-
+    func setupUI(_ info: UserInfo) {
+        userIcon.sd_setImage(with: URL(string: info.user.avatar.original), placeholderImage: UIImage(named: "default"))
+        firstName.text = info.user.firstName
+        lastName.text = info.user.lastName
+    }
+    
 }
 
 extension ProfileView: ProfileViewProtocol {
     func success() {
-        
+        guard let info = presenter?.userData else { return }
+        setupUI(info)
+        print("view success")
     }
     
     func failure(error: Error) {
-        
+        let alert = UIAlertController(title: "Unable to get data", message: "\(error.localizedDescription)", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "Ok", style: .cancel)
+        alert.addAction(ok)
+        self.present(alert, animated: true)
     }
 }
 
