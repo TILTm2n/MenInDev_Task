@@ -19,7 +19,7 @@ class PostNetwork: GetPostsNetworkProtocol {
         request.httpBody = jsonData
         
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("Bearer 266|5Y64elbHH7O9TCBx6Id4IN5XyU8cveAx5SNfGMGp", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer 274|zd0DKpeLI9Hx36uGn1OcIAA0MtEq3HXElASAQYwS", forHTTPHeaderField: "Authorization")
         request.setValue("\(jsonData.count)", forHTTPHeaderField: "Content-Length")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
@@ -53,7 +53,7 @@ class GalleryNetwork: GetAllGalleryNetworkProtocol {
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer 266|5Y64elbHH7O9TCBx6Id4IN5XyU8cveAx5SNfGMGp", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer 274|zd0DKpeLI9Hx36uGn1OcIAA0MtEq3HXElASAQYwS", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
@@ -77,7 +77,7 @@ class GetOneGalleryNetwork: GetOneGalleryNetworkProtocol {
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer 266|5Y64elbHH7O9TCBx6Id4IN5XyU8cveAx5SNfGMGp", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer 274|zd0DKpeLI9Hx36uGn1OcIAA0MtEq3HXElASAQYwS", forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
@@ -94,13 +94,12 @@ class GetOneGalleryNetwork: GetOneGalleryNetworkProtocol {
 }
 
 class ProfileNetwork: ProfileNetworkProtocol {
-    
     func fetchProfile(completion: @escaping (Result<UserInfo, Error>) -> Void) {
         let urlString = "https://yakuba.htmlup.ru/api/v1/profile"
         guard let url = URL(string: urlString) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.setValue("Bearer 266|5Y64elbHH7O9TCBx6Id4IN5XyU8cveAx5SNfGMGp", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer 274|zd0DKpeLI9Hx36uGn1OcIAA0MtEq3HXElASAQYwS", forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -115,7 +114,6 @@ class ProfileNetwork: ProfileNetworkProtocol {
             }
         }.resume()
     }
-    
     func editProfile(_ editData: EditData, completion: @escaping () -> Void) {
         let urlString = "https://yakuba.htmlup.ru/api/v1/profile"
         let json: [String: Any] = ["firstName": editData.firstName, "email": editData.email, "avatarId": editData.avatarId]
@@ -124,12 +122,21 @@ class ProfileNetwork: ProfileNetworkProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("Bearer 266|5Y64elbHH7O9TCBx6Id4IN5XyU8cveAx5SNfGMGp", forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer 274|zd0DKpeLI9Hx36uGn1OcIAA0MtEq3HXElASAQYwS", forHTTPHeaderField: "Authorization")
         request.setValue("\(jsonData.count)", forHTTPHeaderField: "Content-Length")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         URLSession.shared.dataTask(with: request) { _, _, _ in
             
         }.resume()
     }
-    
+    func deleteProfile(with id: Int) {
+        let urlString = "https://yakuba.htmlup.ru/api/v1/profile/1" //потом подставить id аккаунта
+        guard let url = URL(string: urlString) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        request.setValue("Bearer 274|zd0DKpeLI9Hx36uGn1OcIAA0MtEq3HXElASAQYwS", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { _, _, _ in
+            
+        }.resume()
+    }
 }

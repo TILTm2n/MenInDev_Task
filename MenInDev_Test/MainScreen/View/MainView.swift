@@ -89,10 +89,10 @@ extension MainView: MainViewProtocol {
     }
     
     func failure(error: Error) {
-        let alert = UIAlertController(title: "Unable to get data", message: "\(error.localizedDescription)", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Unable to get data", message: "\(error)", preferredStyle: .alert)
         let ok = UIAlertAction(title: "Ok", style: .cancel)
         alert.addAction(ok)
-        self.present(alert, animated: true)
+        //self.present(alert, animated: true)
     }
 }
 

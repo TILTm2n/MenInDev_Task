@@ -33,6 +33,7 @@ class MainPresenter: MainPresenterProtocol {
                     self.view?.success()
                 case .failure(let error):
                     self.view?.failure(error: error)
+                    print("main presenter \(error)")
                 }
             }
         })

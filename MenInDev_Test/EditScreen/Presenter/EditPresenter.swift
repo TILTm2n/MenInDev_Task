@@ -10,6 +10,7 @@ import Foundation
 protocol EditPresenterProtocol: AnyObject {
     var userData: UserInfo? { get set }
     func getProfile()
+    func deletePrifole(with id: Int)
 }
 
 class EditPresenter: EditPresenterProtocol {
@@ -39,6 +40,10 @@ class EditPresenter: EditPresenterProtocol {
                 }
             }
         })
+    }
+    
+    func deletePrifole(with id: Int) {
+        networkService?.deleteProfile(with: id)
     }
     
 }

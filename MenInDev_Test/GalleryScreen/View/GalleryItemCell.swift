@@ -127,7 +127,6 @@ class GalleryItemCell: UITableViewCell {
         image.sd_setImage(with: URL(string: item.preview.original))
         title.text = item.title
         dateCity.text = "\(item.date) • \(item.city)"
-        
     }
 
 }

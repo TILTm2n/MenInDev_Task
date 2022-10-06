@@ -94,10 +94,23 @@ class EditView: UIViewController {
         phoneNumberTextField.delegate = self
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .plain, target: self, action: #selector(save))
+        
+        deleteButton.addTarget(self, action: #selector(deleteProfile), for: .touchUpInside)
     }
     
     @objc func save() {
         print("saved")
+    }
+    
+    @objc func deleteProfile() {
+        let alert = UIAlertController(title: "Удаление аккаунта", message: "Вы уверены, что хотите удалить аккаунт?\nАккаунт будет доступен для восстановления в течение 30 дней, через повторную авторизацию", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "Отменить", style: .cancel)
+        let delete = UIAlertAction(title: "Удалить", style: .destructive) { _ in
+            self.presenter?.deletePrifole(with: 1)
+        }
+        alert.addAction(ok)
+        alert.addAction(delete)
+        self.present(alert, animated: true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {

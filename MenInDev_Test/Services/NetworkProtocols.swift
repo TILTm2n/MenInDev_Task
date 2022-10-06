@@ -46,9 +46,9 @@ protocol EditProfileNetworkPritocol: AnyObject {
 }
 
 protocol DeleteProfileNetworkProtocol: AnyObject {
-    func deleteProfile() -> Void
+    func deleteProfile(with id: Int) -> Void
 }
 
-protocol ProfileNetworkProtocol: GetProfileNetworkProtocol, EditProfileNetworkPritocol {
+protocol ProfileNetworkProtocol: GetProfileNetworkProtocol, EditProfileNetworkPritocol, DeleteProfileNetworkProtocol {
     
 }
