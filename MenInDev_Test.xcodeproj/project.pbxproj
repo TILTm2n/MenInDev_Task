@@ -18,6 +18,8 @@
 		A32A6F2128EC7F7C00959AD3 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A6F2028EC7F7C00959AD3 /* EditView.swift */; };
 		A32A6F2328ED5DC300959AD3 /* CustomEditTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A6F2228ED5DC300959AD3 /* CustomEditTextField.swift */; };
 		A32A6F2628ED99CC00959AD3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A32A6F2528ED99CC00959AD3 /* .gitignore */; };
+		A32A6F2828EDC6FA00959AD3 /* EditData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A6F2728EDC6FA00959AD3 /* EditData.swift */; };
+		A32A6F2A28EE1B4B00959AD3 /* EditPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32A6F2928EE1B4B00959AD3 /* EditPresenter.swift */; };
 		A34017DF28DCF18D003C952B /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34017DE28DCF18D003C952B /* PostModel.swift */; };
 		A34017E128DCF4EC003C952B /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34017E028DCF4EC003C952B /* DetailPresenter.swift */; };
 		A3465C7728E0765900F00C49 /* CommentTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3465C7628E0765900F00C49 /* CommentTextField.swift */; };
@@ -55,6 +57,8 @@
 		A32A6F2028EC7F7C00959AD3 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		A32A6F2228ED5DC300959AD3 /* CustomEditTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomEditTextField.swift; sourceTree = "<group>"; };
 		A32A6F2528ED99CC00959AD3 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		A32A6F2728EDC6FA00959AD3 /* EditData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditData.swift; sourceTree = "<group>"; };
+		A32A6F2928EE1B4B00959AD3 /* EditPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPresenter.swift; sourceTree = "<group>"; };
 		A34017DE28DCF18D003C952B /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		A34017E028DCF4EC003C952B /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		A3465C7628E0765900F00C49 /* CommentTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTextField.swift; sourceTree = "<group>"; };
@@ -191,6 +195,7 @@
 		A32A6F1D28EC740C00959AD3 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				A32A6F2928EE1B4B00959AD3 /* EditPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 		A32A6F1F28EC742600959AD3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A32A6F2728EDC6FA00959AD3 /* EditData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -543,6 +549,7 @@
 				A3BCB47128D8FB5500F0DA8A /* MainTabBar.swift in Sources */,
 				A32A6F1528EAD3C600959AD3 /* ProfileGetUserModel.swift in Sources */,
 				A3BCB45728D8DB7900F0DA8A /* MainView.swift in Sources */,
+				A32A6F2A28EE1B4B00959AD3 /* EditPresenter.swift in Sources */,
 				A36A6BE728E5CD97003867B8 /* GalleryItemCell.swift in Sources */,
 				A3159E5128E6C71F009C3A2E /* GalleryDetailView.swift in Sources */,
 				A34B3E2C28DC9CFA000BFC1D /* NetworkServices.swift in Sources */,
@@ -559,6 +566,7 @@
 				A3159E5528E6E643009C3A2E /* GalleryDetilData.swift in Sources */,
 				A32A6F2128EC7F7C00959AD3 /* EditView.swift in Sources */,
 				A36A6BE528E5A404003867B8 /* FirstGalleryItemCell.swift in Sources */,
+				A32A6F2828EDC6FA00959AD3 /* EditData.swift in Sources */,
 				A3BCB46F28D8F3FD00F0DA8A /* MainPresenter.swift in Sources */,
 				A34017E128DCF4EC003C952B /* DetailPresenter.swift in Sources */,
 			);
