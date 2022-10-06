@@ -12,8 +12,9 @@ class Builder {
     
     static func buildMainModule() -> UIViewController {
         let mainView = MainView()
-        let networkSrvice = PostNetwork()
-        let presenter = MainPresenter(mainView, networkSrvice)
+        let postNetworkSrvice = PostNetwork()
+        let storyNetworkSrvice = StoryNetwork()
+        let presenter = MainPresenter(mainView, postNetworkSrvice, storyNetworkSrvice)
         mainView.presenter = presenter
         return mainView
     }

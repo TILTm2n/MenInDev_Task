@@ -42,6 +42,7 @@
 		A3BCB47F28D9001300F0DA8A /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BCB47E28D9001300F0DA8A /* ProfileView.swift */; };
 		A3BCB48128D9004400F0DA8A /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BCB48028D9004400F0DA8A /* ProfilePresenter.swift */; };
 		A3BD1C8D28E4BACE00C1C932 /* NetworkProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BD1C8C28E4BACE00C1C932 /* NetworkProtocols.swift */; };
+		A3F4687328EF05FE00887A8E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F4687228EF05FE00887A8E /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		A3BCB47E28D9001300F0DA8A /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		A3BCB48028D9004400F0DA8A /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		A3BD1C8C28E4BACE00C1C932 /* NetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocols.swift; sourceTree = "<group>"; };
+		A3F4687228EF05FE00887A8E /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		DA3712DA13D7E644D4889955 /* Pods_MenInDev_Test.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MenInDev_Test.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -283,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				A3BCB46728D8DF5E00F0DA8A /* MainScreen */,
+				A3F4687128EF05E200887A8E /* StoriesScreen */,
 				A34B3E2A28DC9CD7000BFC1D /* PostDetailScreen */,
 				A3BCB47228D8FE4400F0DA8A /* GalleryScreen */,
 				A3159E4C28E6C66C009C3A2E /* GalleryDetailScreen */,
@@ -421,6 +424,14 @@
 				A32A6F1428EAD3C600959AD3 /* ProfileGetUserModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		A3F4687128EF05E200887A8E /* StoriesScreen */ = {
+			isa = PBXGroup;
+			children = (
+				A3F4687228EF05FE00887A8E /* Model.swift */,
+			);
+			path = StoriesScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -567,6 +578,7 @@
 				A32A6F2128EC7F7C00959AD3 /* EditView.swift in Sources */,
 				A36A6BE528E5A404003867B8 /* FirstGalleryItemCell.swift in Sources */,
 				A32A6F2828EDC6FA00959AD3 /* EditData.swift in Sources */,
+				A3F4687328EF05FE00887A8E /* Model.swift in Sources */,
 				A3BCB46F28D8F3FD00F0DA8A /* MainPresenter.swift in Sources */,
 				A34017E128DCF4EC003C952B /* DetailPresenter.swift in Sources */,
 			);

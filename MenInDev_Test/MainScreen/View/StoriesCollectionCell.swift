@@ -13,7 +13,7 @@ class StoriesCollectionCell: UICollectionViewCell {
 
     var container = UIView()
     var storyIcon = UIImageView()
-    var storySubtitile = UILabel()
+    var storyTitle = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,15 +23,15 @@ class StoriesCollectionCell: UICollectionViewCell {
         icon.translatesAutoresizingMaskIntoConstraints = false
         storyIcon = icon
         
-        let subtitle = UILabel()
-        subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.font = .systemFont(ofSize: 13)
-        subtitle.text = "Story"
-        subtitle.textAlignment = .center
-        storySubtitile = subtitle
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.font = .systemFont(ofSize: 13)
+        title.text = "Story"
+        title.textAlignment = .center
+        storyTitle = title
         
         container.addSubview(icon)
-        container.addSubview(subtitle)
+        container.addSubview(title)
         
         contentView.addSubview(container)
     
@@ -39,7 +39,11 @@ class StoriesCollectionCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        NSLayoutConstraint.activate([
+            container.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            container.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            container.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+        ])
         NSLayoutConstraint.activate([
             storyIcon.widthAnchor.constraint(equalToConstant: 52),
             storyIcon.heightAnchor.constraint(equalToConstant: 52),
@@ -47,17 +51,12 @@ class StoriesCollectionCell: UICollectionViewCell {
             storyIcon.topAnchor.constraint(equalTo: container.topAnchor)
         ])
         NSLayoutConstraint.activate([
-            storySubtitile.topAnchor.constraint(equalTo: storyIcon.bottomAnchor),
-            storySubtitile.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            storySubtitile.widthAnchor.constraint(equalTo: contentView.widthAnchor),
-            storySubtitile.heightAnchor.constraint(equalToConstant: 18),
-            storySubtitile.centerXAnchor.constraint(equalTo: container.centerXAnchor)
+            storyTitle.topAnchor.constraint(equalTo: storyIcon.bottomAnchor),
+            storyTitle.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            storyTitle.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            storyTitle.heightAnchor.constraint(equalToConstant: 18),
+            storyTitle.centerXAnchor.constraint(equalTo: container.centerXAnchor)
             
-        ])
-        NSLayoutConstraint.activate([
-            container.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            container.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            container.widthAnchor.constraint(equalTo: contentView.widthAnchor),
         ])
         
     }
@@ -66,9 +65,11 @@ class StoriesCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    func configureCell(_ story: Media) {
-//        storyIcon.sd_setImage(with: story.original, placeholderImage: UIImage(named: "StoryIcon"))
-//    }
+    func configureStoryCell(_ story: Story) {
+        storyTitle.text = story.title
+        guard let media = story.media else { return }
+        storyIcon.sd_setImage(with: URL(string: media.original), placeholderImage: UIImage(named: "StoryIcon"))
+    }
     
 }
 

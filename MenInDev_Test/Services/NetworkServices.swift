@@ -8,7 +8,6 @@
 import Foundation
 
 class PostNetwork: GetPostsNetworkProtocol {
-    
     func fetchPosts(completion: @escaping (Result<[Post], Error>) -> Void) {
         let urlString = "https://yakuba.htmlup.ru/api/v1/posts"
         let json: [String: Any] = ["skip": 0, "limit": 10]
@@ -40,7 +39,32 @@ class PostNetwork: GetPostsNetworkProtocol {
             
         }.resume()
     }
-    
+}
+
+class StoryNetwork: StoryNetworkProtocol {
+    func getStories(completion: @escaping (Result<[Story], Error>) -> Void) {
+        let urlString = "https://yakuba.htmlup.ru/api/v1/stories"
+        guard let url = URL(string: urlString) else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer 274|zd0DKpeLI9Hx36uGn1OcIAA0MtEq3HXElASAQYwS", forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            do {
+                // TODO: опционал убрать
+                let storyData = try JSONDecoder().decode(StoryData.self, from: data!)
+                //print("збс story --> \(storyData)")
+                completion(.success(storyData.data))
+            } catch {
+                //print("не збс story --> \(error)")
+                completion(.failure(error))
+            }
+            
+        }.resume()
+    }
 }
 
 class DetailNetwork: CommentNetworkProtocol {

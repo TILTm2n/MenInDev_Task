@@ -43,6 +43,7 @@ class MainView: UITableViewController {
         tableView.register(PostsTableCell.self, forCellReuseIdentifier: PostsTableCell.identifier)
         
         presenter?.getPosts()
+        presenter?.getStories()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +71,6 @@ class MainView: UITableViewController {
         }
         guard let post = presenter?.posts[indexPath.row] else { return cell }
         cell.setCellContent(post)
-        
         return cell
     }
 
@@ -86,30 +86,46 @@ class MainView: UITableViewController {
 extension MainView: MainViewProtocol {
     func success() {
         tableView?.reloadData()
+        storiesCollection.reloadData()
     }
     
     func failure(error: Error) {
         let alert = UIAlertController(title: "Unable to get data", message: "\(error)", preferredStyle: .alert)
         let ok = UIAlertAction(title: "Ok", style: .cancel)
+        let again = UIAlertAction(title: "try Again", style: .default) { _ in
+            self.presenter?.getPosts()
+            self.presenter?.getStories()
+        }
         alert.addAction(ok)
-        //self.present(alert, animated: true)
+        alert.addAction(again)
+        self.present(alert, animated: true)
     }
 }
 
 extension MainView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return presenter?.stories.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoriesCollectionCell.identifier, for: indexPath) as? StoriesCollectionCell else {
             return UICollectionViewCell()
         }
+        
+        guard let story = presenter?.stories[indexPath.row] else { return UICollectionViewCell() }
+        
+        cell.configureStoryCell(story)
+        
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        storiesCollection.reloadData()
+//        print("reload")
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 60, height: 70)
+        return CGSize(width: 70, height: 70)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -121,6 +137,6 @@ extension MainView: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        20
+        10
     }
 }

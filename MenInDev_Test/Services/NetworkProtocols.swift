@@ -16,8 +16,6 @@ protocol LikeUnlikePostNetworkProtocol: AnyObject {
     func unlikePost(with id: Int)
 }
 
-protocol PostNetworkProtocol: GetPostsNetworkProtocol, LikeUnlikePostNetworkProtocol { }
-
 protocol AddCommentNetworkProtocol: AnyObject {
     func makeComment(for id: Int, with content: String)
 }
@@ -25,6 +23,12 @@ protocol AddCommentNetworkProtocol: AnyObject {
 protocol CommentNetworkProtocol: AnyObject {
     
 }
+
+protocol StoryNetworkProtocol: AnyObject {
+    func getStories(completion: @escaping (Result<[Story], Error>) -> Void)
+}
+
+protocol PostNetworkProtocol: GetPostsNetworkProtocol, LikeUnlikePostNetworkProtocol { }
 
 //MARK: - Gallery
 
