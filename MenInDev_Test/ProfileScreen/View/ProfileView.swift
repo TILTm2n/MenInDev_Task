@@ -8,6 +8,8 @@
 import UIKit
 import SDWebImage
 
+//
+
 enum SocialNetworks: String {
     case yandex = "ya"
     case vkontakte = "vk"
